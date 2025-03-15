@@ -17,6 +17,7 @@ export const CardBody = () => {
       [name]: value,
     });
   };
+
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -33,7 +34,7 @@ export const CardBody = () => {
   return (
     <>
       <form className="text-center" onSubmit={handleSubmit}>
-        <div className="mb-5">
+        <div>
           <input
             type="text"
             id="text"
@@ -41,15 +42,15 @@ export const CardBody = () => {
             value={formData.text}
             onChange={handleOnChange}
             placeholder="Insert text"
-            className="bg-gray-50 border w-96 p-2 mx-2 border-gray-300 text-black rounded-lg text-center "
+            className="bg-gray-50 border w-64 md:w-96 p-2 my-2  border-gray-300 text-black rounded-lg text-center "
             required
           />
 
           <button
             type="submit"
-            className="text-white bg-blue-800 hover:bg-blue-500 rounded-lg p-2"
+            className="text-white md:mx-2 bg-blue-800 font-bold  hover:bg-blue-500 rounded-lg p-2"
           >
-            Send
+            クリック Click
           </button>
         </div>
       </form>

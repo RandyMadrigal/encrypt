@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { ICREATEUSER } from "../../interface/user";
 import { createUser } from "../../services/Api";
 import { useNavigate } from "react-router-dom";
-import { Error } from "../Error";
+import toast from "react-hot-toast";
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
@@ -12,8 +12,6 @@ export const RegisterForm = () => {
     email: "",
     password: "",
   });
-
-  const [error, setError] = useState(false);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -27,22 +25,21 @@ export const RegisterForm = () => {
     e.preventDefault();
     try {
       const request = await createUser(formData);
-      setError(true);
 
       if (request) {
         navigate("/");
+        toast.success("Successfully");
+      } else {
+        toast.error("Ups... we have a problem");
       }
-
-      console.log(request);
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <form onSubmit={sendData} className="w-6/12 mx-auto">
-      {error && <Error msg={"error al crear usuario"} />}
-      <div className="grid grid-cols-2 gap-5">
+    <form onSubmit={sendData} className="md:w-7/12 lg:w-5/12 mx-auto">
+      <div className="flex flex-col mt-2 md:gap-5 md:grid md:grid-cols-2 md:place-items-center">
         <div className="flex flex-col mb-5">
           <label htmlFor="Name" className="mb-2 text-white">
             Name
@@ -53,7 +50,7 @@ export const RegisterForm = () => {
             name="name"
             value={formData.name}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
             placeholder="Insert your name"
             required
           />
@@ -68,7 +65,7 @@ export const RegisterForm = () => {
             name="userName"
             value={formData.userName}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
             placeholder="Insert your user name"
             required
           />
@@ -83,7 +80,7 @@ export const RegisterForm = () => {
             name="email"
             value={formData.email}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
             placeholder="Insert your Email"
             required
           />
@@ -99,7 +96,8 @@ export const RegisterForm = () => {
             name="password"
             value={formData.password}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
+            placeholder="Insert your password"
             required
           />
         </div>

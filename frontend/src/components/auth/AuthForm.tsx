@@ -3,14 +3,12 @@ import { RegisterLink } from "../register/RegisterLink";
 import { ILOGIN } from "../../interface/user";
 import { login } from "../../services/Api";
 import { useNavigate } from "react-router-dom";
-import { Error } from "../Error";
 import { useAuthContext } from "../context/AuthContext";
+import { toast } from "react-hot-toast";
 
 export const AuthForm = () => {
   const navigate = useNavigate();
   const { setIsAuthenticated } = useAuthContext();
-
-  const [error, setError] = useState(false);
 
   const [formData, setformData] = useState<ILOGIN>({
     userName: "",
@@ -33,17 +31,18 @@ export const AuthForm = () => {
       if (request) {
         setIsAuthenticated(true);
         navigate("/encrypt");
+        toast.success("Welcome");
+      } else {
+        toast.error("wrong user or password");
       }
-      setError(true);
     } catch (err) {
       console.log(err);
     }
   };
 
   return (
-    <form className="w-96 mx-auto" onSubmit={sendData}>
-      {error && <Error msg={"Error"} />}
-      <div className="flex flex-col mb-5">
+    <form className="mx-auto w-80 md:w-96" onSubmit={sendData}>
+      <div className="flex flex-col mb-5  ">
         <label htmlFor="email" className="mb-2 text-white">
           User name
         </label>
@@ -53,7 +52,7 @@ export const AuthForm = () => {
           name="userName"
           value={formData.userName}
           onChange={handleOnChange}
-          className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg"
+          className="bg-gray-500 text-white p-2 border w-11/12 md:w-full border-gray-300 rounded-lg"
           placeholder="insert your user name"
           required
         />
@@ -66,17 +65,18 @@ export const AuthForm = () => {
           type="password"
           id="password"
           name="password"
+          placeholder="insert your password"
           value={formData.password}
           onChange={handleOnChange}
-          className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg"
+          className="bg-gray-500 text-white p-2 border w-11/12 md:w-full border-gray-300 rounded-lg"
           required
         />
       </div>
 
-      <div className="flex flex-row mb-5 items-center gap-5">
+      <div className="flex flex-col items-center gap-5 mb-5 md:flex-row md:justify-center md: md:gap-3  ">
         <button
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg px-5 py-2.5"
+          className="text-white bg-blue-700 hover:bg-blue-800 rounded-3xl w-1/4 p-3"
         >
           log in
         </button>

@@ -2,14 +2,11 @@ import { Link } from "react-router-dom";
 export const NavMenu = () => {
   return (
     <div>
-      <ul className="flex flex-row font-bold">
+      <ul className="flex flex-row">
         <li>
-          <a
-            href="#"
-            className="px-5 text-white  hover:text-blue-700 hover:uppercase"
-          >
-            <Link to="encrypt">Encrypt</Link>
-          </a>
+          <Link className="lenguaje" to="encrypt">
+            Encrypt
+          </Link>
         </li>
       </ul>
     </div>

@@ -1,6 +1,8 @@
 import { useAuthContext } from "../context/AuthContext";
 import { logout } from "../../services/Api";
 import { useNavigate } from "react-router-dom";
+import { HiOutlineLogout } from "react-icons/hi";
+import toast from "react-hot-toast";
 
 export const NavLogin = () => {
   const { isAuthenticated, setIsAuthenticated } = useAuthContext();
@@ -11,6 +13,7 @@ export const NavLogin = () => {
       await logout();
       setIsAuthenticated(false);
       navigate("/");
+      toast.success("logout Successfully");
     } catch (err) {
       console.log(err);
     }
@@ -23,7 +26,7 @@ export const NavLogin = () => {
           onClick={handleLogout}
           className="text-white bg-blue-700 hover:bg-blue-800  rounded-lg px-4 py-2 "
         >
-          logout
+          <HiOutlineLogout />
         </button>
       )}
     </>

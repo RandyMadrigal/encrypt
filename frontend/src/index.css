@@ -8,8 +8,24 @@
     font-family:  "Poppins",'Times New Roman', Times, serif;
 }
 
-.imgLogin{
-    font-size: 200px;
-    color: white
 
+
+.lenguaje{
+    position: relative;
+    padding: 5px 0;
+    color: white
 }
+
+.lenguaje:hover{
+    color: transparent;
+}
+
+.lenguaje:hover::after{
+    content: "暗号化";
+    font-weight: bold;
+    color:white;
+    position: absolute;
+    top: 0;
+    left:0;
+}
+
