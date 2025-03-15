@@ -50,7 +50,7 @@ export const RegisterForm = () => {
             name="name"
             value={formData.name}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-80 lg:96"
             placeholder="Insert your name"
             required
           />
@@ -65,7 +65,7 @@ export const RegisterForm = () => {
             name="userName"
             value={formData.userName}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-80 lg:96"
             placeholder="Insert your user name"
             required
           />
@@ -80,7 +80,7 @@ export const RegisterForm = () => {
             name="email"
             value={formData.email}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-80 lg:96"
             placeholder="Insert your Email"
             required
           />
@@ -96,7 +96,7 @@ export const RegisterForm = () => {
             name="password"
             value={formData.password}
             onChange={handleOnChange}
-            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-96"
+            className="bg-gray-500 text-white p-2 border border-gray-300 rounded-lg md:w-80 lg:96"
             placeholder="Insert your password"
             required
           />
