@@ -81,4 +81,24 @@ export const checkToken = async (req: Request, res: Response) => {
   }
 };
 
+export const updatePassword = async (req: Request, res: Response) => {
+  const { userName, password } = req.body;
+
+  try {
+    const user = await authService.forgotPassword(userName, password);
+
+    if (user) {
+      res.status(201).json({ msg: "updated password" });
+      return;
+    }
+    res.status(400).json({ msg: "the password can't be updated" });
+    return;
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(409).json({ msg: err.message });
+      return;
+    }
+  }
+};
+
 export const active = async (req: Request, res: Response) => {};

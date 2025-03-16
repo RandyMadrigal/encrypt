@@ -15,3 +15,16 @@ export const findByEmail = async (email: string) => {
   const user = await userModel.findOne({ email: email });
   return user;
 };
+
+export const updatePassword = async (userData: IUSER, newPassword: string) => {
+  const { userName, password } = userData;
+
+  const user = await userModel.findOneAndUpdate(
+    {
+      userName: userName,
+    },
+    { password: newPassword }
+  );
+
+  return user;
+};

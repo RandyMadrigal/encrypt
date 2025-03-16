@@ -4,6 +4,7 @@ import {
   login,
   logout,
   checkToken,
+  updatePassword,
 } from "../controllers/auth.controllers";
 import { verifyJwtmiddleware } from "../middlewares/verifyJwt.middleware";
 import { validateJoi } from "../middlewares/validateJoi.middleware";
@@ -14,8 +15,8 @@ const router = Router();
 
 router.post("/login", validateJoi(loginSchema), login);
 router.post("/register", validateJoi(createUserSchema), createUser);
+router.post("/forgot-password", updatePassword);
 router.post("/logout", verifyJwtmiddleware, logout);
-
 router.get("/protected", checkToken);
 
 export default router;
