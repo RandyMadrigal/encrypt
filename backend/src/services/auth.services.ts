@@ -41,6 +41,19 @@ export const login = async (userName: string, password: string) => {
   }
 };
 
+export const forgotPassword = async (userName: string, password: string) => {
+  try {
+    const user = await authRepository.findByUserName(userName);
+    if (!user) throw new Error("user not found");
+
+    const newPassword = await hashPassword(password);
+    const updated = await authRepository.updatePassword(user, newPassword);
+    return updated;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 //TODO
 export const activeUser = async (userName: string) => {
   try {
