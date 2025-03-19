@@ -54,6 +54,17 @@ export const forgotPassword = async (userName: string, password: string) => {
   }
 };
 
+export const EmailChangePassword = async (email: string) => {
+  try {
+    const isValid = authRepository.findByEmail(email);
+    if (!isValid) throw new Error("not a valid Email");
+
+    return isValid;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 //TODO
 export const activeUser = async (userName: string) => {
   try {

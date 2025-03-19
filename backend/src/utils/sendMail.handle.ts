@@ -35,13 +35,13 @@ const hbsOptions = {
 
 transporter.use("compile", hbs(hbsOptions));
 
-export const sendMail = async (to: string, name: string) => {
+export const sendMail = async (to: string, name: string, template: string) => {
   try {
     const mailOptions: ExtendedMailOptions = {
       from: `"encrypt-webApp 👻" <${process.env.USER_TRANSPORTER} >`,
       to: `${to}`,
       subject: "encrypt-webApp 👻",
-      template: "welcome",
+      template: template,
       context: { name },
     };
 

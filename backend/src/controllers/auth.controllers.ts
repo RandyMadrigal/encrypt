@@ -18,7 +18,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     if (user) {
       res.status(201).json({ msg: "user created successfully" });
-      await sendMail(user.email, user.name);
+      await sendMail(user.email, user.name, "welcome");
       return;
     }
 
@@ -98,6 +98,28 @@ export const updatePassword = async (req: Request, res: Response) => {
       res.status(409).json({ msg: err.message });
       return;
     }
+  }
+};
+
+export const changePassword = async (req: Request, res: Response) => {
+  const { email } = req.body;
+  try {
+    const user = await authService.EmailChangePassword(email);
+    if (user) {
+      res.status(201).json({ msg: "Success" });
+      await sendMail(user.email, user.name, "forgotPassword");
+      return;
+    }
+    res.status(400).json({ msg: "failed" });
+    return;
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(409).json({ msg: err.message });
+      return;
+    }
+
+    res.status(500).json({ msg: "Internal Server Error" });
+    return;
   }
 };
 
