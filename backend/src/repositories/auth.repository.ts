@@ -17,7 +17,7 @@ export const findByEmail = async (email: string) => {
 };
 
 export const updatePassword = async (userData: IUSER, newPassword: string) => {
-  const { userName, password } = userData;
+  const { userName } = userData;
 
   const user = await userModel.findOneAndUpdate(
     {
