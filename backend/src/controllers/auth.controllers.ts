@@ -82,10 +82,16 @@ export const checkToken = async (req: Request, res: Response) => {
 };
 
 export const updatePassword = async (req: Request, res: Response) => {
-  const { userName, password } = req.body;
+  const { password, confirmPassword } = req.body;
+  const { userName } = req.params;
+  console.log(userName);
 
   try {
-    const user = await authService.forgotPassword(userName, password);
+    const user = await authService.changePassword(
+      userName,
+      password,
+      confirmPassword
+    );
 
     if (user) {
       res.status(201).json({ msg: "updated password" });
@@ -101,13 +107,13 @@ export const updatePassword = async (req: Request, res: Response) => {
   }
 };
 
-export const changePassword = async (req: Request, res: Response) => {
+export const forgotPassword = async (req: Request, res: Response) => {
   const { email } = req.body;
   try {
-    const user = await authService.EmailChangePassword(email);
+    const user = await authService.forgotPassword(email);
     if (user) {
       res.status(201).json({ msg: "Success" });
-      await sendMail(user.email, user.name, "forgotPassword");
+      await sendMail(user.email, user.name, "forgotPassword", user.userName);
       return;
     }
     res.status(400).json({ msg: "failed" });

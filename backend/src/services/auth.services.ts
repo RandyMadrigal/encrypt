@@ -41,8 +41,16 @@ export const login = async (userName: string, password: string) => {
   }
 };
 
-export const forgotPassword = async (userName: string, password: string) => {
+export const changePassword = async (
+  userName: string,
+  password: string,
+  confirmPassword: string
+) => {
   try {
+    const isEqual = password === confirmPassword;
+
+    if (!isEqual) throw new Error("password dont match");
+
     const user = await authRepository.findByUserName(userName);
     if (!user) throw new Error("user not found");
 
@@ -54,7 +62,7 @@ export const forgotPassword = async (userName: string, password: string) => {
   }
 };
 
-export const EmailChangePassword = async (email: string) => {
+export const forgotPassword = async (email: string) => {
   try {
     const isValid = authRepository.findByEmail(email);
     if (!isValid) throw new Error("not a valid Email");
