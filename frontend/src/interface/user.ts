@@ -19,6 +19,11 @@ export interface ILOGIN
   password: string;
 }
 
+export interface IEMAIL
+  extends Omit<IUSER, "createdAt" | "isActive" | "name" | "userName"> {
+  email: string;
+}
+
 export interface IENCRYPT {
   text: string;
 }

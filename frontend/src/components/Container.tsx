@@ -14,8 +14,8 @@ export const Container = ({ children }: Props) => {
         reverseOrder={false}
         toastOptions={{
           className: "mt-24",
-          success: { duration: 1000 },
-          error: { duration: 1000 },
+          success: { duration: 2000 },
+          error: { duration: 2000 },
         }}
       />
     </div>

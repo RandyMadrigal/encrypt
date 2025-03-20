@@ -1,4 +1,4 @@
-import { ICREATEUSER, IENCRYPT, ILOGIN } from "../interface/user";
+import { ICREATEUSER, IEMAIL, IENCRYPT, ILOGIN } from "../interface/user";
 
 export const createUser = async (data: ICREATEUSER) => {
   try {
@@ -102,3 +102,32 @@ export const logout = async () => {
     console.log(err);
   }
 };
+
+export const changePassword = async (data: IEMAIL) => {
+  try {
+    const response = await fetch(
+      import.meta.env.VITE_API_EMAIL_CHANGE_PASSWORD_URL ||
+        "API_EMAIL_CHANGE_PASSWORD_URL",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "Application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!response.ok) {
+      const err = await response.json();
+      throw new Error(`error, Status:${response.status}, Msg: ${err.msg} `);
+    }
+    const info = await response.json();
+    console.log(info);
+    return info;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const forgotPassword = async () => {};
