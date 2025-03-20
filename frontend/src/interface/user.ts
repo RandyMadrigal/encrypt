@@ -24,6 +24,15 @@ export interface IEMAIL
   email: string;
 }
 
+export interface IPASSWORD
+  extends Omit<
+    IUSER,
+    "createdAt" | "isActive" | "name" | "userName" | "email"
+  > {
+  password: string;
+  confirmPassword: string;
+}
+
 export interface IENCRYPT {
   text: string;
 }

@@ -84,7 +84,7 @@ export const checkToken = async (req: Request, res: Response) => {
 export const updatePassword = async (req: Request, res: Response) => {
   const { password, confirmPassword } = req.body;
   const { userName } = req.params;
-  console.log(userName);
+  console.log(password, confirmPassword);
 
   try {
     const user = await authService.changePassword(

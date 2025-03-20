@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { IEMAIL } from "../../interface/user";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { changePassword } from "../../services/Api";
+import { forgotPassword } from "../../services/Api";
 import toast from "react-hot-toast";
 
 export const ForgotPassword = () => {
@@ -22,7 +22,7 @@ export const ForgotPassword = () => {
   const sendData = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const request = await changePassword(formData);
+      const request = await forgotPassword(formData);
       console.log(request);
 
       if (request) {

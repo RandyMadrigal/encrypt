@@ -18,7 +18,10 @@ function App() {
             <Route path="/" element={<AuthCard />} />
             <Route path="/register" element={<CardRegister />} />
             <Route path="/forgotPassword" element={<ForgotPassword />} />
-            <Route path="/changePassword" element={<ChangePassword />} />
+            <Route
+              path="/changePassword/:userName"
+              element={<ChangePassword />}
+            />
             <Route element={<ProtectedRoute />}>
               <Route path="/encrypt" element={<Card />} />
             </Route>
