@@ -18,7 +18,7 @@ export const createUser = async (req: Request, res: Response) => {
 
     if (user) {
       res.status(201).json({ msg: "user created successfully" });
-      await sendMail(user.email, user.name);
+      await sendMail(user.email, user.name, "welcome");
       return;
     }
 
@@ -78,6 +78,54 @@ export const checkToken = async (req: Request, res: Response) => {
     res.json({ authenticated: true });
   } catch {
     res.json({ authenticated: false });
+  }
+};
+
+export const updatePassword = async (req: Request, res: Response) => {
+  const { password, confirmPassword } = req.body;
+  const { userName } = req.params;
+  console.log(password, confirmPassword);
+
+  try {
+    const user = await authService.changePassword(
+      userName,
+      password,
+      confirmPassword
+    );
+
+    if (user) {
+      res.status(201).json({ msg: "updated password" });
+      return;
+    }
+    res.status(400).json({ msg: "the password can't be updated" });
+    return;
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(409).json({ msg: err.message });
+      return;
+    }
+  }
+};
+
+export const forgotPassword = async (req: Request, res: Response) => {
+  const { email } = req.body;
+  try {
+    const user = await authService.forgotPassword(email);
+    if (user) {
+      res.status(201).json({ msg: "Success" });
+      await sendMail(user.email, user.name, "forgotPassword", user.userName);
+      return;
+    }
+    res.status(400).json({ msg: "failed" });
+    return;
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(409).json({ msg: err.message });
+      return;
+    }
+
+    res.status(500).json({ msg: "Internal Server Error" });
+    return;
   }
 };
 
