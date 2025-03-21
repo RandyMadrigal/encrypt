@@ -1,12 +1,12 @@
 import app from "./app";
 import connection from "./config/db.connection";
 
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 connection()
   .then(() => {
     console.log(">>> Connected to MongoDB database");
-    app.listen(port, () => console.log(`>>> server running in port ${port}`));
+    app.listen(PORT, () => console.log(`>>> server running in port ${PORT}`));
   })
   .catch((err) => {
     console.log(err);
