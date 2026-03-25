@@ -1,25 +1,26 @@
 import { IENCRYPT } from "../interface/user";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export const encryptPassword = async (data: IENCRYPT) => {
   try {
-    const response = await fetch(
-      import.meta.env.VITE_API_ENCRYPT_URL || "API_ENCRYPT_URL",
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify(data),
+    const response = await fetch(`${API_URL}/api/encrypt`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+      body: JSON.stringify(data),
+    });
 
     if (!response.ok) {
       const err = await response.json();
-      throw new Error(`error, Status:${response.status}, Msg: ${err.msg} `);
+      throw new Error(
+        `Error ${response.status}: ${err.msg || "Something went wrong"}`,
+      );
     }
-    const info = await response.json();
 
+    const info = await response.json();
     return info.text;
   } catch (err) {
     console.log(err);
