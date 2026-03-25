@@ -1,6 +1,6 @@
 import { IENCRYPT } from "../interface/user";
 
-const API_URL = import.meta.env.VITE_API_URL;
+const API_URL = import.meta.env.VITE_API_ENCRYPT_URL;
 
 export const encryptPassword = async (data: IENCRYPT) => {
   try {
