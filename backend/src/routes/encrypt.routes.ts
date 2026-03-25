@@ -5,10 +5,6 @@ import { encryptSchema } from "../utils/joiSchema/encrypt.schema";
 
 const router = Router();
 
-router.post(
-  "/encrypt-password",
-  validateJoi(encryptSchema),
-  getEncryptPassword,
-);
+router.post("/", validateJoi(encryptSchema), getEncryptPassword);
 
 export default router;
