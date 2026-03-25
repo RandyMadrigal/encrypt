@@ -3,8 +3,6 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import morgan from "morgan";
-import authRoutes from "./routes/auth.routes";
-import historyRoutes from "./routes/history.routes";
 import encryptRoutes from "./routes/encrypt.routes";
 
 const app: Application = express();
@@ -16,16 +14,14 @@ app.use(
     origin: process.env.CLIENT_URL, // URL del cliente",
     methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
     credentials: true, // Para permitir el uso de cookies
-  })
+  }),
 );
 
 app.use(cookieParser());
 
 app.use(morgan("dev"));
 
-app.use("/api/auth", authRoutes);
 app.use("/api/encrypt", encryptRoutes);
-app.use("/api/history", historyRoutes);
 
 app.use("/", (req: Request, res: Response, next: NextFunction) => {
   res.status(404).json({ msg: "not found" });
