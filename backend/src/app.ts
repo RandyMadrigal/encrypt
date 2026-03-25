@@ -1,4 +1,4 @@
-import express, { Application, NextFunction, Request, Response } from "express";
+import express, { Application, Request, Response } from "express";
 import "dotenv/config";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -7,24 +7,26 @@ import encryptRoutes from "./routes/encrypt.routes";
 
 const app: Application = express();
 
+// Middlewares básicos
 app.use(express.json());
+app.use(cookieParser());
+app.use(morgan("dev"));
 
+// CORS seguro
 app.use(
   cors({
-    origin: process.env.CLIENT_URL, // URL del cliente",
-    methods: ["GET", "POST", "PUT", "DELETE"], // Métodos permitidos
-    credentials: true, // Para permitir el uso de cookies
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   }),
 );
 
-app.use(cookieParser());
-
-app.use(morgan("dev"));
-
+// Rutas
 app.use("/api/encrypt", encryptRoutes);
 
-app.use("/", (req: Request, res: Response, next: NextFunction) => {
-  res.status(404).json({ msg: "not found" });
+// 404 handler
+app.use((req: Request, res: Response) => {
+  res.status(404).json({ msg: "Not Found" });
 });
 
 export default app;

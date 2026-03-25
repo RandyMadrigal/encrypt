@@ -50,7 +50,7 @@ export const CardBody = () => {
             type="submit"
             className="text-white md:mx-2 bg-blue-800 font-bold  hover:bg-blue-500 rounded-lg p-2"
           >
-            クリック Click
+            クリック Clic
           </button>
         </div>
       </form>
