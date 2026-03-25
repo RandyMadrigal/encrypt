@@ -1,13 +1,43 @@
+import { motion, AnimatePresence } from "framer-motion";
+
 interface propEncrypt {
   encrypt: string;
 }
 
 export const Encrypt = ({ encrypt }: propEncrypt) => {
   return (
-    <textarea
-      className="w-11/12 h-24 md:h-12 lg:w-full font-bold bg-gray-900 bg-opacity-5  text-white p-2 text-center resize-none"
-      disabled
-      value={encrypt}
-    />
+    <div
+      className="w-full"
+      ref={(el) => {
+        if (el && encrypt !== "-") {
+          el.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+      }}
+    >
+      <AnimatePresence mode="wait">
+        <motion.textarea
+          key={encrypt}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -10 }}
+          transition={{ duration: 0.25 }}
+          value={encrypt}
+          disabled
+          className="
+            w-full
+            min-h-[80px]
+            p-3
+            rounded-xl
+            text-center
+            text-white
+            font-mono text-sm
+            bg-black/30
+            border border-white/10
+            backdrop-blur-md
+            resize-none
+          "
+        />
+      </AnimatePresence>
+    </div>
   );
 };

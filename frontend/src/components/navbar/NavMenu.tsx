@@ -4,7 +4,7 @@ export const NavMenu = () => {
     <div>
       <ul className="flex flex-row">
         <li>
-          <Link className="lenguaje" to="encrypt">
+          <Link className="lenguaje" to="/">
             Encrypt
           </Link>
         </li>
