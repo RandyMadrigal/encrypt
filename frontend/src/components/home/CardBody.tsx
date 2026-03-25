@@ -1,11 +1,14 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { IENCRYPT } from "../../interface/user";
 import { encryptPassword } from "../../services/Api";
+import { InfoPanel } from "./InfoPanel";
+import { DevPanel } from "../devPanel/DevPanel";
 import { Encrypt } from "./Encrypt";
 
 export const CardBody = () => {
   const [encrypt, setEncrypt] = useState("-");
   const [formData, setFormData] = useState<IENCRYPT>({ text: "" });
+  const [showDev, setShowDev] = useState(false);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -70,6 +73,23 @@ export const CardBody = () => {
       </form>
 
       <Encrypt encrypt={encrypt} />
+
+      <button
+        onClick={() => setShowDev(!showDev)}
+        className="
+    mt-3
+    text-xs
+    text-gray-400
+    hover:text-blue-400
+    transition-colors
+  "
+      >
+        {showDev ? "Hide developer info ▲" : "Show developer info ▼"}
+      </button>
+
+      {showDev && <DevPanel hash={encrypt} />}
+
+      <InfoPanel />
     </>
   );
 };
