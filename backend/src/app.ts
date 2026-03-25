@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 // CORS seguro
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: process.env.CLIENT_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }),
