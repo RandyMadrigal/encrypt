@@ -1,0 +1,20 @@
+# Build outputs
+dist/
+dist-ssr/
+build/
+
+# Dependencies
+node_modules/
+
+# Generated files
+*.tsbuildinfo
+coverage/
+
+# Lock files (let package managers own these)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment files
+.env
+.env.*

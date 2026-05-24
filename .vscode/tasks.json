@@ -1,0 +1,153 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    // ─── Dev servers ──────────────────────────────────────────────────────────
+
+    {
+      "label": "Frontend: Dev Server",
+      "type": "npm",
+      "script": "dev",
+      "path": "frontend/",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "label": "Frontend",
+        "panel": "dedicated",
+        "group": "dev",
+        "reveal": "always",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "Backend: Dev Server",
+      "type": "npm",
+      "script": "dev",
+      "path": "backend/",
+      "group": "build",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "label": "Backend",
+        "panel": "dedicated",
+        "group": "dev",
+        "reveal": "always",
+        "showReuseMessage": false
+      }
+    },
+    {
+      "label": "Dev: Start All",
+      "dependsOn": ["Frontend: Dev Server", "Backend: Dev Server"],
+      "dependsOrder": "parallel",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "problemMatcher": [],
+      "presentation": {
+        "reveal": "silent"
+      }
+    },
+
+    // ─── Backend debug ────────────────────────────────────────────────────────
+
+    {
+      "label": "Backend: Dev (Debug Mode)",
+      "type": "npm",
+      "script": "dev:debug",
+      "path": "backend/",
+      "isBackground": true,
+      "problemMatcher": [],
+      "presentation": {
+        "label": "Backend Debug",
+        "panel": "dedicated",
+        "group": "debug",
+        "reveal": "always"
+      }
+    },
+
+    // ─── Build ────────────────────────────────────────────────────────────────
+
+    {
+      "label": "Frontend: Build",
+      "type": "npm",
+      "script": "build",
+      "path": "frontend/",
+      "group": "build",
+      "problemMatcher": ["$tsc"],
+      "presentation": {
+        "panel": "shared",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Backend: Build",
+      "type": "npm",
+      "script": "build",
+      "path": "backend/",
+      "group": "build",
+      "problemMatcher": ["$tsc"],
+      "presentation": {
+        "panel": "shared",
+        "reveal": "always"
+      }
+    },
+    {
+      "label": "Build: All",
+      "dependsOn": ["Frontend: Build", "Backend: Build"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+
+    // ─── Lint ─────────────────────────────────────────────────────────────────
+
+    {
+      "label": "Frontend: Lint",
+      "type": "npm",
+      "script": "lint",
+      "path": "frontend/",
+      "group": "test",
+      "problemMatcher": ["$eslint-stylish"],
+      "presentation": {
+        "panel": "shared",
+        "reveal": "always"
+      }
+    },
+
+    // ─── Install ──────────────────────────────────────────────────────────────
+
+    {
+      "label": "Install: Frontend",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "problemMatcher": [],
+      "presentation": { "panel": "shared", "reveal": "always" }
+    },
+    {
+      "label": "Install: Backend",
+      "type": "shell",
+      "command": "npm install",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": [],
+      "presentation": { "panel": "shared", "reveal": "always" }
+    },
+    {
+      "label": "Install: All",
+      "dependsOn": ["Install: Frontend", "Install: Backend"],
+      "dependsOrder": "parallel",
+      "problemMatcher": []
+    },
+
+    // ─── Audit ────────────────────────────────────────────────────────────────
+
+    {
+      "label": "Audit: Backend",
+      "type": "shell",
+      "command": "npm audit",
+      "options": { "cwd": "${workspaceFolder}/backend" },
+      "problemMatcher": [],
+      "presentation": { "panel": "shared", "reveal": "always" }
+    }
+  ]
+}
