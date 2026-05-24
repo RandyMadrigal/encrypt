@@ -8,27 +8,29 @@ import encryptRoutes from "./routes/encrypt.routes";
 
 const app: Application = express();
 
-// Security headers first — must precede all other middleware
+// Required when running behind a reverse proxy (Nginx, cloud LB).
+// Without this, req.ip is the proxy IP and all clients share one rate-limit slot.
+app.set("trust proxy", 1);
+
 app.use(helmet());
 
-// CORS before body parsing: preflights never reach the parser and
-// requests from blocked origins are rejected without touching the body
 app.use(
   cors({
     origin: process.env.CLIENT_URL || "http://localhost:5173",
     methods: ["POST"],
     allowedHeaders: ["Content-Type"],
-    // No `credentials: true` — the API uses no cookies or sessions
   }),
 );
 
-// Body parser with explicit size cap (max input is 200 chars)
 app.use(express.json({ limit: "10kb" }));
 
-// Request logging after CORS so rejected requests are not logged
 app.use(morgan(process.env.NODE_ENV === "production" ? "combined" : "dev"));
 
-// Rate limiting scoped to /api only
+// Health check — must be before rate limiter so load balancers are never rate-limited
+app.get("/health", (_req: Request, res: Response) => {
+  res.status(200).json({ status: "ok" });
+});
+
 app.use(
   "/api",
   rateLimit({

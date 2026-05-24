@@ -8,6 +8,18 @@ if (!Number.isInteger(PORT) || PORT < 1 || PORT > 65535) {
   process.exit(1);
 }
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Finish in-flight requests before closing (Docker stop, PM2 restart, systemd)
+const shutdown = (signal: string) => {
+  console.log(`${signal} received — shutting down gracefully`);
+  server.close(() => {
+    console.log("Server closed");
+    process.exit(0);
+  });
+};
+
+process.on("SIGTERM", () => shutdown("SIGTERM"));
+process.on("SIGINT", () => shutdown("SIGINT"));
