@@ -1,0 +1,40 @@
+{
+  "recommendations": [
+    // ─── Formatting & Linting ────────────────────────────────────────────────
+    "esbenp.prettier-vscode",        // Prettier — code formatter
+    "dbaeumer.vscode-eslint",        // ESLint — flat config support
+
+    // ─── TypeScript & React ──────────────────────────────────────────────────
+    "ms-vscode.vscode-typescript-next",   // Latest TS language features
+    "yoavbls.pretty-ts-errors",           // Human-readable TS errors
+    "dsznajder.es7-react-js-snippets",    // React/TS snippets
+
+    // ─── Tailwind CSS ────────────────────────────────────────────────────────
+    "bradlc.vscode-tailwindcss",     // IntelliSense, hover previews, autocomplete
+
+    // ─── Developer Experience ────────────────────────────────────────────────
+    "usernamehw.errorlens",          // Inline error messages in editor
+    "formulahendry.auto-rename-tag", // Auto-rename paired HTML/JSX tags
+    "christian-kohler.path-intellisense", // Autocomplete file paths in imports
+    "mikestead.dotenv",              // .env file syntax highlighting
+    "aaron-bond.better-comments",   // Color-coded comment annotations
+
+    // ─── Git ─────────────────────────────────────────────────────────────────
+    "eamodio.gitlens",               // Git blame, history, co-authors
+    "mhutchie.git-graph",            // Visual branch graph
+
+    // ─── API Testing ─────────────────────────────────────────────────────────
+    "rangav.vscode-thunder-client",  // REST client — test the encrypt endpoint
+
+    // ─── Code Quality ────────────────────────────────────────────────────────
+    "streetsidesoftware.code-spell-checker", // Catch typos in code & comments
+
+    // ─── Theming ─────────────────────────────────────────────────────────────
+    "pkief.material-icon-theme"      // File icons for better navigation
+  ],
+
+  "unwantedRecommendations": [
+    "hookyqr.beautify",              // Replaced by Prettier
+    "ms-vscode.vscode-js-profile-flame" // Not needed for this stack
+  ]
+}

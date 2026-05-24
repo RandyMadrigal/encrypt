@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "Encrypt — Monorepo Root",
+      "path": "."
+    },
+    {
+      "name": "Frontend — React · Vite · Tailwind",
+      "path": "frontend"
+    },
+    {
+      "name": "Backend — Express · Node.js · bcrypt",
+      "path": "backend"
+    }
+  ],
+  "settings": {
+    // Workspace-level overrides (merges with .vscode/settings.json)
+    "typescript.preferences.importModuleSpecifier": "relative"
+  },
+  "extensions": {
+    "recommendations": []
+  }
+}

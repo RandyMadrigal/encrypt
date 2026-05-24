@@ -1,111 +1,124 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { IENCRYPT } from "../../interface/user";
-import { encryptPassword } from "../../services/Api";
+import { useState } from "react";
+import { HiOutlineSparkles } from "react-icons/hi2";
+import { useEncrypt } from "../../hooks/useEncrypt";
 import { InfoPanel } from "./InfoPanel";
 import { DevPanel } from "../devPanel/DevPanel";
 import { Encrypt } from "./Encrypt";
 
+const encoder = new TextEncoder();
+const byteLength = (s: string) => encoder.encode(s).length;
+
+const BCRYPT_BYTE_LIMIT = 72;
+const MAX_CHARS = 200;
+
 export const CardBody = () => {
-  const [encrypt, setEncrypt] = useState("-");
-  const [formData, setFormData] = useState<IENCRYPT>({ text: "" });
+  const { hash, text, setText, loading, handleSubmit } = useEncrypt();
   const [showDev, setShowDev] = useState(false);
-  const [loading, setLoading] = useState(false);
 
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-
-    try {
-      const request = await encryptPassword(formData);
-      if (request) setEncrypt(request);
-    } catch (err) {
-      console.log(err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const bytes = byteLength(text);
+  const exceedsLimit = bytes > BCRYPT_BYTE_LIMIT;
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-        <input
-          type="text"
-          name="text"
-          value={formData.text}
-          onChange={handleOnChange}
-          placeholder="Insert text..."
-          className="
-            w-full
-            p-3
-            rounded-xl
-            bg-white/20
-            text-white
-            placeholder-gray-300
-            backdrop-blur-md
-            border border-white/20
-            focus:outline-none
-            focus:ring-2
-            focus:ring-blue-400
-            transition-all duration-200
-          "
-          required
-        />
+    <div className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1.5">
+          <label
+            htmlFor="text"
+            className="text-xs font-medium tracking-wide uppercase"
+            style={{ color: "var(--text-2)" }}
+          >
+            Input
+          </label>
+          <input
+            id="text"
+            type="text"
+            value={text}
+            onChange={(e) => setText(e.target.value)}
+            placeholder="Enter text to encrypt..."
+            autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            maxLength={MAX_CHARS}
+            required
+            className="input-premium w-full h-11 px-4 rounded-xl text-sm"
+          />
+
+          {text.length > 0 && (
+            <div className="flex items-start justify-between gap-2 px-0.5">
+              <span
+                className="text-[11px] leading-tight"
+                style={{ color: exceedsLimit ? "rgba(245,158,11,0.9)" : "transparent" }}
+                aria-live="polite"
+              >
+                {exceedsLimit
+                  ? `⚠ bcrypt truncates after 72 bytes (${bytes} bytes entered — only the first 72 will be hashed)`
+                  : "placeholder"}
+              </span>
+              <span
+                className="text-[11px] font-mono flex-shrink-0"
+                style={{ color: "var(--text-3)" }}
+              >
+                {text.length}/{MAX_CHARS}
+              </span>
+            </div>
+          )}
+        </div>
 
         <button
           type="submit"
           disabled={loading}
           className="
-    w-full
-    py-3
-    rounded-xl
-    font-semibold
-    bg-blue-500
-    hover:bg-blue-400
-    active:scale-95
-    transition-all duration-200
-    shadow-lg shadow-blue-500/30
-    flex items-center justify-center gap-2
-    disabled:opacity-60
-    disabled:cursor-not-allowed
-  "
+            w-full h-11 rounded-xl
+            text-sm font-semibold text-white
+            flex items-center justify-center gap-2
+            transition-all duration-200 cursor-pointer
+            disabled:opacity-50 disabled:cursor-not-allowed
+            active:scale-[0.98]
+          "
+          style={{
+            background: loading
+              ? "rgba(59,130,246,0.5)"
+              : "linear-gradient(135deg, #06B6D4, #3B82F6)",
+            boxShadow: loading ? "none" : "0 0 24px rgba(6,182,212,0.25)",
+          }}
         >
           {loading ? (
             <>
-              <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span
+                className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"
+                aria-hidden="true"
+              />
               Encrypting...
             </>
           ) : (
-            "Encrypt"
+            <>
+              <HiOutlineSparkles className="w-4 h-4" aria-hidden="true" />
+              Encrypt
+            </>
           )}
         </button>
       </form>
 
-      <Encrypt encrypt={encrypt} />
+      <Encrypt encrypt={hash} />
 
-      <button
-        onClick={() => setShowDev(!showDev)}
-        className="
-    mt-3
-    text-xs
-    text-gray-400
-    hover:text-blue-400
-    transition-colors
-  "
-      >
-        {showDev ? "Hide developer info ▲" : "Show developer info ▼"}
-      </button>
+      {hash !== null && (
+        <button
+          onClick={() => setShowDev((prev) => !prev)}
+          className="
+            flex items-center justify-center gap-1.5
+            text-xs transition-colors duration-150 cursor-pointer py-1
+          "
+          style={{ color: "var(--text-3)" }}
+        >
+          <span>{showDev ? "Hide" : "Show"} developer info</span>
+          <span className="text-[10px]">{showDev ? "▲" : "▼"}</span>
+        </button>
+      )}
 
-      {showDev && <DevPanel hash={encrypt} />}
+      {hash !== null && showDev && <DevPanel hash={hash} />}
 
       <InfoPanel />
-    </>
+    </div>
   );
 };

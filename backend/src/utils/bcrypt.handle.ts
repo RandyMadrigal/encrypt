@@ -1,6 +1,8 @@
 import { hash } from "bcryptjs";
+import type { IHashService } from "../interfaces/hash.interface";
 
-export const hashPassword = async (password: string): Promise<string> => {
-  const salt: number = 12;
-  return await hash(password, salt);
+const ROUNDS = 12;
+
+export const bcryptService: IHashService = {
+  hash: (text: string) => hash(text, ROUNDS),
 };

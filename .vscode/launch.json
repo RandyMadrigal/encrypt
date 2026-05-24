@@ -1,0 +1,91 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    // ─── Backend ──────────────────────────────────────────────────────────────
+
+    {
+      // Runs ts-node directly — no build step required.
+      // Use this for quick debugging without nodemon.
+      "name": "Backend: Debug (ts-node)",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["ts-node"],
+      "args": ["./src/server.ts"],
+      "cwd": "${workspaceFolder}/backend",
+      "console": "integratedTerminal",
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "outputCapture": "std"
+    },
+    {
+      // Attach to a running nodemon process started with --inspect.
+      // Run "Backend: Dev (Debug Mode)" task first, then attach here.
+      "name": "Backend: Attach (nodemon --inspect)",
+      "type": "node",
+      "request": "attach",
+      "port": 9229,
+      "restart": true,
+      "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+      "presentation": {
+        "group": "Backend",
+        "order": 2
+      }
+    },
+
+    // ─── Frontend ─────────────────────────────────────────────────────────────
+
+    {
+      // Launches Chrome with Vite source maps.
+      // Requires the Frontend dev server to be running on port 5173.
+      "name": "Frontend: Debug (Chrome)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend/src",
+      "sourceMapPathOverrides": {
+        "/@fs/*": "/*",
+        "/src/*": "${workspaceFolder}/frontend/src/*"
+      },
+      "presentation": {
+        "group": "Frontend",
+        "order": 1
+      }
+    },
+    {
+      "name": "Frontend: Debug (Edge)",
+      "type": "msedge",
+      "request": "launch",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/frontend/src",
+      "sourceMapPathOverrides": {
+        "/@fs/*": "/*",
+        "/src/*": "${workspaceFolder}/frontend/src/*"
+      },
+      "presentation": {
+        "group": "Frontend",
+        "order": 2
+      }
+    }
+  ],
+
+  "compounds": [
+    {
+      // Starts ts-node backend + Chrome frontend debugger simultaneously.
+      // Both breakpoints (frontend & backend) will work at the same time.
+      "name": "Full Stack: Debug",
+      "configurations": [
+        "Backend: Debug (ts-node)",
+        "Frontend: Debug (Chrome)"
+      ],
+      "stopAll": true,
+      "presentation": {
+        "hidden": false,
+        "group": "Full Stack",
+        "order": 1
+      }
+    }
+  ]
+}

@@ -39,6 +39,3 @@ A modern web application to securely hash text using **bcrypt**, built with a fu
 
 /frontend → React app (UI)
 /backend → Express API (bcrypt hashing)
-
-
-

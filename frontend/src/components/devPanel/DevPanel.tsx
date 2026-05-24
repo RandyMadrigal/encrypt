@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
 import { parseHash } from "../../utils/parseHash";
+import { useClipboard } from "../../hooks/useClipboard";
 import { DevHeader } from "./DevHeader";
 import { HashInfo } from "./HashInfo";
 import { HashBreakdown } from "./HashBreakdown";
@@ -10,46 +10,44 @@ interface Props {
 }
 
 export const DevPanel = ({ hash }: Props) => {
-  const [copied, setCopied] = useState(false);
-
-  if (!hash || hash === "-") return null;
-
+  const { copied, copy } = useClipboard();
   const parsed = parseHash(hash);
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(hash);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
-  };
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
+      initial={{ opacity: 0, y: -8 }}
       animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      className="
-        mt-4 w-full
-        text-xs text-gray-400
-        bg-black/40
-        border border-white/10
-        rounded-xl p-4
-        font-mono
-      "
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     >
-      <DevHeader copied={copied} onCopy={handleCopy} />
-
-      <HashInfo cost={parsed?.cost} />
-
-      {parsed && (
-        <HashBreakdown
-          version={parsed.version}
-          cost={parsed.cost}
-          salt={parsed.salt}
-          hashed={parsed.hashed}
-        />
-      )}
-
-      <div className="mt-3 break-all text-gray-300">{hash}</div>
+      <div
+        className="flex flex-col gap-4 p-4 rounded-xl font-mono text-xs"
+        style={{
+          background: "var(--bg-panel)",
+          border: "1px solid var(--border-sm)",
+        }}
+      >
+        <DevHeader copied={copied} onCopy={() => copy(hash)} />
+        <HashInfo cost={parsed?.cost} />
+        {parsed && (
+          <HashBreakdown
+            version={parsed.version}
+            cost={parsed.cost}
+            salt={parsed.salt}
+            hashed={parsed.hashed}
+          />
+        )}
+        <div
+          className="px-3 py-2 rounded-lg break-all leading-relaxed"
+          style={{
+            background: "var(--bg-code)",
+            border: "1px solid var(--border-xs)",
+            color: "var(--text-2)",
+          }}
+        >
+          {hash}
+        </div>
+      </div>
     </motion.div>
   );
 };

@@ -1,30 +1,26 @@
+import { HiOutlineCodeBracket } from "react-icons/hi2";
+
 export const Footer = () => {
   return (
     <footer
-      className="
-  mt-8
-  text-[11px]
-  text-gray-500
-  flex flex-col items-center gap-2
-  opacity-70 hover:opacity-100
-  transition
-"
+      className="flex items-center justify-center gap-4 pb-8 text-[11px]"
+      style={{ color: "var(--text-3)" }}
     >
-      <p>
-        Built by -<span className="text-white font-medium">Chaaaan</span>
-      </p>
-
+      <span>
+        Built by{" "}
+        <span className="font-medium" style={{ color: "var(--text-2)" }}>
+          Chan
+        </span>
+      </span>
+      <span>·</span>
       <a
         href="https://github.com/RandyMadrigal/encrypt"
         target="_blank"
         rel="noopener noreferrer"
-        className="
-          flex items-center gap-2
-          hover:text-white
-          transition-colors
-        "
+        className="flex items-center gap-1.5 transition-colors duration-150 cursor-pointer hover:text-slate-500 dark:hover:text-slate-400"
       >
-        View on GitHub
+        <HiOutlineCodeBracket className="w-3.5 h-3.5" aria-hidden="true" />
+        Source
       </a>
     </footer>
   );

@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import * as encryptService from "../services/encrypt.services";
+import { encryptService } from "../services/encrypt.services";
 
 export const getEncryptPassword = async (req: Request, res: Response) => {
   const { text } = req.body;
 
   try {
     const hashPassword = await encryptService.encryptPassword(text);
-    res.status(201).json({ msg: "encrypted successfully", text: hashPassword });
-    return;
+    res.status(200).json({ message: "encrypted successfully", text: hashPassword });
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 };

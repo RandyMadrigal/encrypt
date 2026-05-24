@@ -1,0 +1,182 @@
+{
+  // ─── Editor ───────────────────────────────────────────────────────────────
+
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.insertSpaces": true,
+  "editor.rulers": [100],
+  "editor.wordWrap": "off",
+  "editor.linkedEditing": true,
+  "editor.stickyScroll.enabled": true,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+  "editor.suggest.preview": true,
+  "editor.inlayHints.enabled": "offUnlessPressed",
+  "editor.minimap.enabled": false,
+  "editor.cursorBlinking": "smooth",
+  "editor.renderWhitespace": "boundary",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  // ─── Language-specific formatters ─────────────────────────────────────────
+
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.wordWrap": "on"
+  },
+
+  // ─── TypeScript ───────────────────────────────────────────────────────────
+
+  "typescript.preferences.quoteStyle": "double",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "typescript.suggest.autoImports": true,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.inlayHints.parameterNames.enabled": "literals",
+  "typescript.inlayHints.functionLikeReturnTypes.enabled": false,
+  "typescript.inlayHints.variableTypes.enabled": false,
+  // Use the project's own TS version instead of VS Code's bundled one
+  "typescript.tsdk": "frontend/node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+  // ─── ESLint ───────────────────────────────────────────────────────────────
+
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    { "directory": "frontend", "changeProcessCWD": true }
+  ],
+
+  // ─── Tailwind CSS ─────────────────────────────────────────────────────────
+
+  "tailwindCSS.experimental.classRegex": [
+    ["className[\\s]*=[\\s]*[\"'`]([^\"'`]*)[\"'`]"],
+    ["clsx\\(([^)]*)\\)", "\"([^\"]*)\""],
+    ["cn\\(([^)]*)\\)", "\"([^\"]*)\""]
+  ],
+  "tailwindCSS.includeLanguages": {
+    "typescript": "html",
+    "typescriptreact": "html"
+  },
+  "tailwindCSS.rootFontSize": 16,
+  // Prevent built-in CSS validators from flagging @tailwind directives
+  "css.validate": false,
+  "scss.validate": false,
+  "less.validate": false,
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+
+  // ─── Emmet (JSX support) ──────────────────────────────────────────────────
+
+  "emmet.includeLanguages": {
+    "typescriptreact": "html"
+  },
+  "emmet.triggerExpansionOnTab": false,
+
+  // ─── File nesting ─────────────────────────────────────────────────────────
+  // Groups config/lock files under their parent so Explorer stays clean
+
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.indent": 12,
+  "explorer.fileNesting.patterns": {
+    "package.json": "package-lock.json, yarn.lock, pnpm-lock.yaml, .npmrc, .nvmrc",
+    "tsconfig.json": "tsconfig.*.json",
+    ".env": ".env.*, .env.example",
+    "vite.config.*": "vite.config.*, vitest.config.*",
+    "tailwind.config.*": "tailwind.config.*, postcss.config.*",
+    "eslint.config.*": "eslint.config.*, .eslintignore",
+    ".prettierrc*": ".prettierignore",
+    ".gitignore": ".gitattributes, .gitmodules, .gitmessage",
+    "*.ts": "${capture}.js, ${capture}.d.ts, ${capture}.js.map",
+    "*.tsx": "${capture}.test.tsx, ${capture}.stories.tsx"
+  },
+
+  // ─── File watcher (performance) ───────────────────────────────────────────
+
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/dist-ssr/**": true,
+    "**/.vite/**": true,
+    "**/*.tsbuildinfo": true
+  },
+
+  // ─── Search exclusions ────────────────────────────────────────────────────
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/dist-ssr": true,
+    "**/.git": true,
+    "**/*.tsbuildinfo": true,
+    "**/coverage": true,
+    "**/package-lock.json": true
+  },
+
+  // ─── Explorer exclusions (hides clutter from sidebar) ────────────────────
+
+  "files.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/.git": true,
+    "**/*.tsbuildinfo": true
+  },
+
+  // ─── Terminal ─────────────────────────────────────────────────────────────
+
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.fontSize": 13,
+  "terminal.integrated.cursorStyle": "line",
+  "terminal.integrated.env.windows": {
+    "NODE_ENV": "development"
+  },
+  "terminal.integrated.tabs.enabled": true,
+
+  // ─── Git ──────────────────────────────────────────────────────────────────
+
+  "git.autofetch": true,
+  "git.autofetchPeriod": 180,
+  "git.confirmSync": false,
+  "git.enableSmartCommit": true,
+  "git.branchProtection": ["main"],
+  "git.inputValidationSubjectLength": 72,
+  "scm.defaultViewMode": "tree",
+
+  // ─── Miscellaneous ────────────────────────────────────────────────────────
+
+  "breadcrumbs.enabled": true,
+  "workbench.editor.enablePreview": false,
+  "workbench.editor.labelFormat": "short",
+  "workbench.iconTheme": "material-icon-theme",
+  "explorer.confirmDelete": false,
+  "explorer.confirmDragAndDrop": false
+}
