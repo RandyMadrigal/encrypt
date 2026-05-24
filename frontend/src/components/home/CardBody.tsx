@@ -15,7 +15,8 @@ export const CardBody = () => {
         <div className="flex flex-col gap-1.5">
           <label
             htmlFor="text"
-            className="text-xs font-medium text-slate-400 tracking-wide uppercase"
+            className="text-xs font-medium tracking-wide uppercase"
+            style={{ color: "var(--text-2)" }}
           >
             Input
           </label>
@@ -27,7 +28,7 @@ export const CardBody = () => {
             placeholder="Enter text to encrypt..."
             autoComplete="off"
             required
-            className="input-premium w-full h-11 px-4 rounded-xl text-sm text-white placeholder-slate-500"
+            className="input-premium w-full h-11 px-4 rounded-xl text-sm"
           />
         </div>
 
@@ -73,9 +74,9 @@ export const CardBody = () => {
           onClick={() => setShowDev((prev) => !prev)}
           className="
             flex items-center justify-center gap-1.5
-            text-xs text-slate-500 hover:text-slate-300
-            transition-colors duration-150 cursor-pointer py-1
+            text-xs transition-colors duration-150 cursor-pointer py-1
           "
+          style={{ color: "var(--text-3)" }}
         >
           <span>{showDev ? "Hide" : "Show"} developer info</span>
           <span className="text-[10px]">{showDev ? "▲" : "▼"}</span>

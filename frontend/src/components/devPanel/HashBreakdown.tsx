@@ -17,7 +17,12 @@ export const HashBreakdown = ({ version, cost, salt, hashed }: Props) => {
 
   return (
     <div className="flex flex-col gap-2">
-      <span className="text-[10px] text-slate-600 uppercase tracking-wider">Hash Structure</span>
+      <span
+        className="text-[10px] uppercase tracking-wider"
+        style={{ color: "var(--text-3)" }}
+      >
+        Hash Structure
+      </span>
       <div className="flex flex-col gap-1.5">
         {segments.map(({ label, color, bg, border }, i) => (
           <div
@@ -31,7 +36,10 @@ export const HashBreakdown = ({ version, cost, salt, hashed }: Props) => {
             >
               {label}
             </span>
-            <span className="text-slate-300 break-all leading-relaxed text-[11px]">
+            <span
+              className="break-all leading-relaxed text-[11px]"
+              style={{ color: "var(--text-1)" }}
+            >
               {values[i]}
             </span>
           </div>

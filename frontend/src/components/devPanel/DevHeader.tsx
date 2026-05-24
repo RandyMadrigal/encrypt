@@ -8,9 +8,11 @@ interface Props {
 export const DevHeader = ({ copied, onCopy }: Props) => {
   return (
     <div className="flex items-center justify-between">
-      <div className="flex items-center gap-2 text-slate-400">
+      <div className="flex items-center gap-2" style={{ color: "var(--text-2)" }}>
         <HiOutlineCommandLine className="w-3.5 h-3.5" aria-hidden="true" />
-        <span className="font-medium text-slate-300">Developer Info</span>
+        <span className="font-medium" style={{ color: "var(--text-1)" }}>
+          Developer Info
+        </span>
       </div>
 
       <button
@@ -23,9 +25,9 @@ export const DevHeader = ({ copied, onCopy }: Props) => {
           cursor-pointer
         "
         style={{
-          background: copied ? "rgba(6,182,212,0.15)" : "rgba(255,255,255,0.06)",
-          border: copied ? "1px solid rgba(6,182,212,0.3)" : "1px solid rgba(255,255,255,0.08)",
-          color: copied ? "#06B6D4" : "#94a3b8",
+          background: copied ? "rgba(6,182,212,0.15)" : "var(--bg-subtle)",
+          border: copied ? "1px solid rgba(6,182,212,0.3)" : "1px solid var(--border-sm)",
+          color: copied ? "#06B6D4" : "var(--text-2)",
         }}
         aria-label="Copy hash to clipboard"
       >

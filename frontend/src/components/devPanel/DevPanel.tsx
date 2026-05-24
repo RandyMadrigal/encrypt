@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
 import { parseHash } from "../../utils/parseHash";
+import { useClipboard } from "../../hooks/useClipboard";
 import { DevHeader } from "./DevHeader";
 import { HashInfo } from "./HashInfo";
 import { HashBreakdown } from "./HashBreakdown";
@@ -10,21 +10,8 @@ interface Props {
 }
 
 export const DevPanel = ({ hash }: Props) => {
-  const [copied, setCopied] = useState(false);
-  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
-
-  useEffect(() => {
-    return () => clearTimeout(timeoutRef.current);
-  }, []);
-
+  const { copied, copy } = useClipboard();
   const parsed = parseHash(hash);
-
-  const handleCopy = async () => {
-    await navigator.clipboard.writeText(hash);
-    clearTimeout(timeoutRef.current);
-    setCopied(true);
-    timeoutRef.current = setTimeout(() => setCopied(false), 1500);
-  };
 
   return (
     <motion.div
@@ -36,11 +23,11 @@ export const DevPanel = ({ hash }: Props) => {
       <div
         className="flex flex-col gap-4 p-4 rounded-xl font-mono text-xs"
         style={{
-          background: "rgba(0,0,0,0.35)",
-          border: "1px solid rgba(255,255,255,0.07)",
+          background: "var(--bg-panel)",
+          border: "1px solid var(--border-sm)",
         }}
       >
-        <DevHeader copied={copied} onCopy={handleCopy} />
+        <DevHeader copied={copied} onCopy={() => copy(hash)} />
         <HashInfo cost={parsed?.cost} />
         {parsed && (
           <HashBreakdown
@@ -51,8 +38,12 @@ export const DevPanel = ({ hash }: Props) => {
           />
         )}
         <div
-          className="px-3 py-2 rounded-lg break-all text-slate-400 leading-relaxed"
-          style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}
+          className="px-3 py-2 rounded-lg break-all leading-relaxed"
+          style={{
+            background: "var(--bg-code)",
+            border: "1px solid var(--border-xs)",
+            color: "var(--text-2)",
+          }}
         >
           {hash}
         </div>

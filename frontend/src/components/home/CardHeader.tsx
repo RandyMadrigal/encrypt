@@ -20,11 +20,10 @@ export const CardHeader = () => {
 
       {/* Title */}
       <div className="flex flex-col gap-1">
-        <h1 className="text-2xl font-bold tracking-tight text-white">
-          Password{" "}
-          <span className="gradient-text">Encryption</span>
+        <h1 className="text-2xl font-bold tracking-tight" style={{ color: "var(--text-1)" }}>
+          Password <span className="gradient-text">Encryption</span>
         </h1>
-        <p className="text-sm text-slate-400 leading-relaxed">
+        <p className="text-sm leading-relaxed" style={{ color: "var(--text-2)" }}>
           Convert any text into a secure, irreversible bcrypt hash.
         </p>
       </div>

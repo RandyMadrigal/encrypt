@@ -1,15 +1,7 @@
 import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 import { encryptPassword } from "../services/api";
-
-const TOAST_ERROR_STYLE = {
-  style: {
-    background: "#0F1A2E",
-    border: "1px solid rgba(239,68,68,0.3)",
-    color: "#fff",
-    fontSize: "14px",
-  },
-};
+import { TOAST_ERROR_STYLE } from "../constants";
 
 export const useEncrypt = () => {
   const [hash, setHash] = useState<string | null>(null);
@@ -22,7 +14,7 @@ export const useEncrypt = () => {
     try {
       setHash(await encryptPassword({ text }));
     } catch {
-      toast.error("Encryption failed. Is the API running?", TOAST_ERROR_STYLE);
+      toast.error("Encryption failed.", TOAST_ERROR_STYLE);
     } finally {
       setLoading(false);
     }

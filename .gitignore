@@ -4,6 +4,8 @@ node_modules/
 # Build outputs
 dist/
 dist-ssr/
+*.tsbuildinfo
+coverage/
 
 # Environment files — never commit real secrets
 .env
@@ -37,5 +39,6 @@ apps/api/data/
 #CLAUDE
 CLAUDE.md
 .claude
+.claude/
 .agents
 skills-lock.json

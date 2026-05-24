@@ -20,10 +20,18 @@ export const Encrypt = ({ encrypt }: Props) => {
           }}
         >
           <div className="flex items-center justify-between">
-            <span className="text-xs font-medium text-slate-400 uppercase tracking-wide">
+            <span
+              className="text-xs font-medium uppercase tracking-wide"
+              style={{ color: "var(--text-2)" }}
+            >
               Hash Output
             </span>
-            <span className="text-[10px] text-slate-600 font-mono">bcrypt · $2b$</span>
+            <span
+              className="text-[10px] font-mono"
+              style={{ color: "var(--text-3)" }}
+            >
+              bcrypt · $2b$
+            </span>
           </div>
           <textarea
             value={encrypt}
@@ -31,11 +39,12 @@ export const Encrypt = ({ encrypt }: Props) => {
             rows={3}
             className="
               w-full px-4 py-3 rounded-xl
-              text-xs text-cyan-300 font-mono leading-relaxed
+              text-xs font-mono leading-relaxed
               resize-none focus:outline-none cursor-text select-all
+              text-cyan-600 dark:text-cyan-300
             "
             style={{
-              background: "rgba(6,182,212,0.04)",
+              background: "rgba(6,182,212,0.05)",
               border: "1px solid rgba(6,182,212,0.15)",
               boxShadow: "0 0 24px rgba(6,182,212,0.04) inset",
             }}
@@ -50,11 +59,13 @@ export const Encrypt = ({ encrypt }: Props) => {
           transition={{ duration: 0.2 }}
           className="flex items-center justify-center h-16 rounded-xl"
           style={{
-            background: "rgba(255,255,255,0.02)",
-            border: "1px dashed rgba(255,255,255,0.06)",
+            background: "var(--bg-subtle)",
+            border: "1px dashed var(--border-sm)",
           }}
         >
-          <span className="text-xs text-slate-600">Hash will appear here</span>
+          <span className="text-xs" style={{ color: "var(--text-3)" }}>
+            Hash will appear here
+          </span>
         </motion.div>
       )}
     </AnimatePresence>

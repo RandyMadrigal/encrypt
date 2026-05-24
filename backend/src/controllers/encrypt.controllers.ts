@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import * as encryptService from "../services/encrypt.services";
+import { encryptService } from "../services/encrypt.services";
 
 export const getEncryptPassword = async (req: Request, res: Response) => {
   const { text } = req.body;

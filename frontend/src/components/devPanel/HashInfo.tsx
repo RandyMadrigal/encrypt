@@ -16,25 +16,52 @@ export const HashInfo = ({ cost }: Props) => {
   return (
     <div
       className="grid grid-cols-2 gap-2 p-3 rounded-lg text-[11px]"
-      style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.04)" }}
+      style={{
+        background: "var(--bg-subtle)",
+        border: "1px solid var(--border-xs)",
+      }}
     >
       <div className="flex flex-col gap-0.5">
-        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Algorithm</span>
-        <span className="text-slate-300 font-medium">bcrypt</span>
+        <span
+          className="uppercase tracking-wider text-[10px]"
+          style={{ color: "var(--text-3)" }}
+        >
+          Algorithm
+        </span>
+        <span className="font-medium" style={{ color: "var(--text-1)" }}>
+          bcrypt
+        </span>
       </div>
       <div className="flex flex-col gap-0.5">
-        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Cost factor</span>
-        <span className="text-slate-300 font-medium">{cost ?? "—"}</span>
+        <span
+          className="uppercase tracking-wider text-[10px]"
+          style={{ color: "var(--text-3)" }}
+        >
+          Cost factor
+        </span>
+        <span className="font-medium" style={{ color: "var(--text-1)" }}>
+          {cost ?? "—"}
+        </span>
       </div>
       {desc && (
         <div className="col-span-2 flex flex-col gap-0.5">
-          <span className="text-slate-600 uppercase tracking-wider text-[10px]">Performance</span>
-          <span className="text-slate-400">{desc}</span>
+          <span
+            className="uppercase tracking-wider text-[10px]"
+            style={{ color: "var(--text-3)" }}
+          >
+            Performance
+          </span>
+          <span style={{ color: "var(--text-2)" }}>{desc}</span>
         </div>
       )}
       <div className="col-span-2 flex flex-col gap-0.5">
-        <span className="text-slate-600 uppercase tracking-wider text-[10px]">Salt</span>
-        <span className="text-slate-400">Embedded in hash (22 chars)</span>
+        <span
+          className="uppercase tracking-wider text-[10px]"
+          style={{ color: "var(--text-3)" }}
+        >
+          Salt
+        </span>
+        <span style={{ color: "var(--text-2)" }}>Embedded in hash (22 chars)</span>
       </div>
     </div>
   );

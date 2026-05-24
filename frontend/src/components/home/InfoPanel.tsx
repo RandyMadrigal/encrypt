@@ -34,11 +34,18 @@ export const InfoPanel = () => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.25, duration: 0.3, ease: "easeOut" }}
       className="flex flex-col gap-4 pt-2"
-      style={{ borderTop: "1px solid rgba(255,255,255,0.05)" }}
+      style={{ borderTop: "1px solid var(--border-xs)" }}
     >
       <div className="flex items-center gap-2">
-        <HiOutlineInformationCircle className="w-3.5 h-3.5 text-slate-500" aria-hidden="true" />
-        <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">
+        <HiOutlineInformationCircle
+          className="w-3.5 h-3.5"
+          style={{ color: "var(--text-3)" }}
+          aria-hidden="true"
+        />
+        <span
+          className="text-xs font-medium uppercase tracking-wide"
+          style={{ color: "var(--text-3)" }}
+        >
           Why bcrypt?
         </span>
       </div>
@@ -53,8 +60,12 @@ export const InfoPanel = () => {
               <Icon className="w-3.5 h-3.5" style={{ color }} aria-hidden="true" />
             </div>
             <div className="flex flex-col gap-0.5">
-              <span className="text-xs font-medium text-slate-300">{title}</span>
-              <span className="text-xs text-slate-500 leading-relaxed">{desc}</span>
+              <span className="text-xs font-medium" style={{ color: "var(--text-2)" }}>
+                {title}
+              </span>
+              <span className="text-xs leading-relaxed" style={{ color: "var(--text-3)" }}>
+                {desc}
+              </span>
             </div>
           </div>
         ))}
@@ -62,16 +73,25 @@ export const InfoPanel = () => {
 
       {/* Example */}
       <div className="flex flex-col gap-2">
-        <span className="text-xs font-medium text-slate-500 uppercase tracking-wide">Example</span>
-        <div
-          className="px-3 py-2 rounded-lg font-mono text-[11px] text-slate-400 break-all leading-relaxed"
-          style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}
+        <span
+          className="text-xs font-medium uppercase tracking-wide"
+          style={{ color: "var(--text-3)" }}
         >
-          <span className="text-slate-500">input: </span>
-          <span className="text-slate-300">password123</span>
+          Example
+        </span>
+        <div
+          className="px-3 py-2 rounded-lg font-mono text-[11px] break-all leading-relaxed"
+          style={{
+            background: "var(--bg-code)",
+            border: "1px solid var(--border-xs)",
+            color: "var(--text-2)",
+          }}
+        >
+          <span style={{ color: "var(--text-3)" }}>input: </span>
+          <span style={{ color: "var(--text-1)" }}>password123</span>
           <br />
-          <span className="text-slate-500">hash: </span>
-          <span className="text-cyan-600">$2b$12$X9k...KJH23</span>
+          <span style={{ color: "var(--text-3)" }}>hash: </span>
+          <span className="text-cyan-600 dark:text-cyan-600">$2b$12$X9k...KJH23</span>
         </div>
       </div>
     </motion.div>
