@@ -24,32 +24,37 @@ export const DevPanel = ({ hash }: Props) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: -10 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      className="
-        mt-4 w-full
-        text-xs text-gray-400
-        bg-black/40
-        border border-white/10
-        rounded-xl p-4
-        font-mono
-      "
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: "auto" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="overflow-hidden"
     >
-      <DevHeader copied={copied} onCopy={handleCopy} />
-
-      <HashInfo cost={parsed?.cost} />
-
-      {parsed && (
-        <HashBreakdown
-          version={parsed.version}
-          cost={parsed.cost}
-          salt={parsed.salt}
-          hashed={parsed.hashed}
-        />
-      )}
-
-      <div className="mt-3 break-all text-gray-300">{hash}</div>
+      <div
+        className="flex flex-col gap-4 p-4 rounded-xl font-mono text-xs"
+        style={{
+          background: "rgba(0,0,0,0.35)",
+          border: "1px solid rgba(255,255,255,0.07)",
+        }}
+      >
+        <DevHeader copied={copied} onCopy={handleCopy} />
+        <HashInfo cost={parsed?.cost} />
+        {parsed && (
+          <HashBreakdown
+            version={parsed.version}
+            cost={parsed.cost}
+            salt={parsed.salt}
+            hashed={parsed.hashed}
+          />
+        )}
+        {/* Raw hash */}
+        <div
+          className="px-3 py-2 rounded-lg break-all text-slate-400 leading-relaxed"
+          style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}
+        >
+          {hash}
+        </div>
+      </div>
     </motion.div>
   );
 };

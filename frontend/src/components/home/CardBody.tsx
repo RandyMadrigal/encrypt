@@ -1,5 +1,6 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import toast from "react-hot-toast";
+import { HiOutlineSparkles } from "react-icons/hi2";
 import { IENCRYPT } from "../../interface/user";
 import { encryptPassword } from "../../services/Api";
 import { InfoPanel } from "./InfoPanel";
@@ -23,78 +24,116 @@ export const CardBody = () => {
     try {
       const result = await encryptPassword(formData);
       setEncrypt(result);
-    } catch (err) {
-      toast.error("Failed to encrypt. Please try again.");
+    } catch {
+      toast.error("Encryption failed. Is the API running?", {
+        style: {
+          background: "#0F1A2E",
+          border: "1px solid rgba(239,68,68,0.3)",
+          color: "#fff",
+          fontSize: "14px",
+        },
+      });
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit} className="flex flex-col gap-4 w-full">
-        <input
-          type="text"
-          name="text"
-          value={formData.text}
-          onChange={handleOnChange}
-          placeholder="Insert text..."
-          className="
-            w-full
-            p-3
-            rounded-xl
-            bg-white/20
-            text-white
-            placeholder-gray-300
-            backdrop-blur-md
-            border border-white/20
-            focus:outline-none
-            focus:ring-2
-            focus:ring-blue-400
-            transition-all duration-200
-          "
-          required
-        />
+    <div className="flex flex-col gap-5">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3">
+        <div className="flex flex-col gap-1.5">
+          <label htmlFor="text" className="text-xs font-medium text-slate-400 tracking-wide uppercase">
+            Input
+          </label>
+          <input
+            id="text"
+            type="text"
+            name="text"
+            value={formData.text}
+            onChange={handleOnChange}
+            placeholder="Enter text to encrypt..."
+            autoComplete="off"
+            required
+            className="
+              w-full h-11 px-4
+              rounded-xl
+              text-sm text-white
+              placeholder-slate-500
+              transition-all duration-200
+              focus:outline-none
+            "
+            style={{
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
+            }}
+            onFocus={e => {
+              e.target.style.border = "1px solid rgba(6,182,212,0.4)";
+              e.target.style.boxShadow = "0 0 0 3px rgba(6,182,212,0.08)";
+            }}
+            onBlur={e => {
+              e.target.style.border = "1px solid rgba(255,255,255,0.08)";
+              e.target.style.boxShadow = "none";
+            }}
+          />
+        </div>
 
         <button
           type="submit"
           disabled={loading}
           className="
-            w-full
-            py-3
+            w-full h-11
             rounded-xl
-            font-semibold
-            bg-blue-500
-            hover:bg-blue-400
-            active:scale-95
+            text-sm font-semibold text-white
+            flex items-center justify-center gap-2
             transition-all duration-200
-            shadow-lg shadow-blue-500/30
-            disabled:opacity-60
-            disabled:cursor-not-allowed
+            cursor-pointer
+            disabled:opacity-50 disabled:cursor-not-allowed
+            active:scale-[0.98]
           "
+          style={{
+            background: loading
+              ? "rgba(59,130,246,0.5)"
+              : "linear-gradient(135deg, #06B6D4, #3B82F6)",
+            boxShadow: loading ? "none" : "0 0 24px rgba(6,182,212,0.25)",
+          }}
         >
-          {loading ? "Encrypting..." : "Encrypt"}
+          {loading ? (
+            <>
+              <span
+                className="w-4 h-4 rounded-full border-2 border-white/30 border-t-white animate-spin"
+                aria-hidden="true"
+              />
+              Encrypting...
+            </>
+          ) : (
+            <>
+              <HiOutlineSparkles className="w-4 h-4" aria-hidden="true" />
+              Encrypt
+            </>
+          )}
         </button>
       </form>
 
       <Encrypt encrypt={encrypt} />
 
-      <button
-        onClick={() => setShowDev(!showDev)}
-        className="
-    mt-3
-    text-xs
-    text-gray-400
-    hover:text-blue-400
-    transition-colors
-  "
-      >
-        {showDev ? "Hide developer info ▲" : "Show developer info ▼"}
-      </button>
+      {encrypt !== "-" && (
+        <button
+          onClick={() => setShowDev(!showDev)}
+          className="
+            flex items-center justify-center gap-1.5
+            text-xs text-slate-500 hover:text-slate-300
+            transition-colors duration-150
+            cursor-pointer py-1
+          "
+        >
+          <span>{showDev ? "Hide" : "Show"} developer info</span>
+          <span className="text-[10px]">{showDev ? "▲" : "▼"}</span>
+        </button>
+      )}
 
       {showDev && <DevPanel hash={encrypt} />}
 
       <InfoPanel />
-    </>
+    </div>
   );
 };
