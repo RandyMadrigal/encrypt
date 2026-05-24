@@ -1,12 +1,10 @@
-import { IENCRYPT } from "../interface/user";
+import { EncryptPayload } from "../types";
 
-export const encryptPassword = async (data: IENCRYPT): Promise<string> => {
+export const encryptPassword = async (data: EncryptPayload): Promise<string> => {
   const response = await fetch(import.meta.env.VITE_API_ENCRYPT_URL, {
     method: "POST",
     credentials: "include",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
 
