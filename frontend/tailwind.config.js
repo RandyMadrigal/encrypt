@@ -9,13 +9,17 @@ export default {
           900: "#0B1120",
           800: "#0F1A2E",
         },
+        accent: {
+          cyan: "#06B6D4",
+          blue: "#3B82F6",
+          purple: "#8B5CF6",
+        },
       },
       fontFamily: {
         mono: ["'JetBrains Mono'", "'Fira Code'", "monospace"],
       },
       animation: {
         "pulse-slow": "pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite",
-        "spin-slow": "spin 8s linear infinite",
         shimmer: "shimmer 2s linear infinite",
       },
       keyframes: {

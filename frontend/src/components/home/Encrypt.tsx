@@ -1,15 +1,13 @@
 import { AnimatePresence, motion } from "framer-motion";
 
 interface Props {
-  encrypt: string;
+  encrypt: string | null;
 }
 
 export const Encrypt = ({ encrypt }: Props) => {
-  const hasResult = encrypt !== "-";
-
   return (
     <AnimatePresence mode="wait">
-      {hasResult ? (
+      {encrypt !== null ? (
         <motion.div
           key={encrypt}
           initial={{ opacity: 0, y: 8 }}
@@ -17,7 +15,7 @@ export const Encrypt = ({ encrypt }: Props) => {
           exit={{ opacity: 0, y: -8 }}
           transition={{ duration: 0.2, ease: "easeOut" }}
           className="flex flex-col gap-2"
-          ref={el => {
+          ref={(el) => {
             if (el) el.scrollIntoView({ behavior: "smooth", block: "nearest" });
           }}
         >
@@ -32,16 +30,9 @@ export const Encrypt = ({ encrypt }: Props) => {
             readOnly
             rows={3}
             className="
-              w-full
-              px-4 py-3
-              rounded-xl
-              text-xs text-cyan-300
-              font-mono leading-relaxed
-              resize-none
-              transition-all duration-200
-              focus:outline-none
-              cursor-text
-              select-all
+              w-full px-4 py-3 rounded-xl
+              text-xs text-cyan-300 font-mono leading-relaxed
+              resize-none focus:outline-none cursor-text select-all
             "
             style={{
               background: "rgba(6,182,212,0.04)",

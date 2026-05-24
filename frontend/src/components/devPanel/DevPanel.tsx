@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { parseHash } from "../../utils/parseHash";
 import { DevHeader } from "./DevHeader";
 import { HashInfo } from "./HashInfo";
@@ -11,24 +11,27 @@ interface Props {
 
 export const DevPanel = ({ hash }: Props) => {
   const [copied, setCopied] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout>>();
 
-  if (!hash || hash === "-") return null;
+  useEffect(() => {
+    return () => clearTimeout(timeoutRef.current);
+  }, []);
 
   const parsed = parseHash(hash);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(hash);
+    clearTimeout(timeoutRef.current);
     setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    timeoutRef.current = setTimeout(() => setCopied(false), 1500);
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: "auto" }}
-      exit={{ opacity: 0, height: 0 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="overflow-hidden"
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
     >
       <div
         className="flex flex-col gap-4 p-4 rounded-xl font-mono text-xs"
@@ -47,7 +50,6 @@ export const DevPanel = ({ hash }: Props) => {
             hashed={parsed.hashed}
           />
         )}
-        {/* Raw hash */}
         <div
           className="px-3 py-2 rounded-lg break-all text-slate-400 leading-relaxed"
           style={{ background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.05)" }}

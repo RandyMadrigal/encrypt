@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { HiOutlineSparkles } from "react-icons/hi2";
 import { useEncrypt } from "../../hooks/useEncrypt";
 import { InfoPanel } from "./InfoPanel";
@@ -5,7 +6,8 @@ import { DevPanel } from "../devPanel/DevPanel";
 import { Encrypt } from "./Encrypt";
 
 export const CardBody = () => {
-  const { hash, text, setText, loading, showDev, toggleDev, handleSubmit } = useEncrypt();
+  const { hash, text, setText, loading, handleSubmit } = useEncrypt();
+  const [showDev, setShowDev] = useState(false);
 
   return (
     <div className="flex flex-col gap-5">
@@ -66,9 +68,9 @@ export const CardBody = () => {
 
       <Encrypt encrypt={hash} />
 
-      {hash !== "-" && (
+      {hash !== null && (
         <button
-          onClick={toggleDev}
+          onClick={() => setShowDev((prev) => !prev)}
           className="
             flex items-center justify-center gap-1.5
             text-xs text-slate-500 hover:text-slate-300
@@ -80,7 +82,7 @@ export const CardBody = () => {
         </button>
       )}
 
-      {showDev && <DevPanel hash={hash} />}
+      {hash !== null && showDev && <DevPanel hash={hash} />}
 
       <InfoPanel />
     </div>

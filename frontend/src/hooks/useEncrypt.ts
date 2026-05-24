@@ -12,10 +12,9 @@ const TOAST_ERROR_STYLE = {
 };
 
 export const useEncrypt = () => {
-  const [hash, setHash] = useState("-");
+  const [hash, setHash] = useState<string | null>(null);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
-  const [showDev, setShowDev] = useState(false);
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -29,7 +28,5 @@ export const useEncrypt = () => {
     }
   };
 
-  const toggleDev = () => setShowDev((prev) => !prev);
-
-  return { hash, text, setText, loading, showDev, toggleDev, handleSubmit };
+  return { hash, text, setText, loading, handleSubmit };
 };
