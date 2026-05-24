@@ -16,16 +16,24 @@ const parseErrorMessage = async (response: Response): Promise<string> => {
 };
 
 export const encryptPassword = async (data: EncryptPayload): Promise<string> => {
-  const response = await fetch(API_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data),
-  });
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 10_000);
 
-  if (!response.ok) {
-    throw new Error(await parseErrorMessage(response));
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      throw new Error(await parseErrorMessage(response));
+    }
+
+    const body = await response.json();
+    return body.text;
+  } finally {
+    clearTimeout(timeout);
   }
-
-  const body = await response.json();
-  return body.text;
 };

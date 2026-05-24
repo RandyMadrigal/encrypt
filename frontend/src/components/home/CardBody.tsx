@@ -5,9 +5,18 @@ import { InfoPanel } from "./InfoPanel";
 import { DevPanel } from "../devPanel/DevPanel";
 import { Encrypt } from "./Encrypt";
 
+const encoder = new TextEncoder();
+const byteLength = (s: string) => encoder.encode(s).length;
+
+const BCRYPT_BYTE_LIMIT = 72;
+const MAX_CHARS = 200;
+
 export const CardBody = () => {
   const { hash, text, setText, loading, handleSubmit } = useEncrypt();
   const [showDev, setShowDev] = useState(false);
+
+  const bytes = byteLength(text);
+  const exceedsLimit = bytes > BCRYPT_BYTE_LIMIT;
 
   return (
     <div className="flex flex-col gap-5">
@@ -27,9 +36,33 @@ export const CardBody = () => {
             onChange={(e) => setText(e.target.value)}
             placeholder="Enter text to encrypt..."
             autoComplete="off"
+            autoCorrect="off"
+            autoCapitalize="off"
+            spellCheck={false}
+            maxLength={MAX_CHARS}
             required
             className="input-premium w-full h-11 px-4 rounded-xl text-sm"
           />
+
+          {text.length > 0 && (
+            <div className="flex items-start justify-between gap-2 px-0.5">
+              <span
+                className="text-[11px] leading-tight"
+                style={{ color: exceedsLimit ? "rgba(245,158,11,0.9)" : "transparent" }}
+                aria-live="polite"
+              >
+                {exceedsLimit
+                  ? `⚠ bcrypt truncates after 72 bytes (${bytes} bytes entered — only the first 72 will be hashed)`
+                  : "placeholder"}
+              </span>
+              <span
+                className="text-[11px] font-mono flex-shrink-0"
+                style={{ color: "var(--text-3)" }}
+              >
+                {text.length}/{MAX_CHARS}
+              </span>
+            </div>
+          )}
         </div>
 
         <button

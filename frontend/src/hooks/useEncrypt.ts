@@ -10,11 +10,22 @@ export const useEncrypt = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (!text.trim()) {
+      toast.error("Input cannot be empty.", TOAST_ERROR_STYLE);
+      return;
+    }
+
     setLoading(true);
     try {
       setHash(await encryptPassword({ text }));
-    } catch {
-      toast.error("Encryption failed.", TOAST_ERROR_STYLE);
+    } catch (err) {
+      if (err instanceof DOMException && err.name === "AbortError") {
+        toast.error("Request timed out. Is the API running?", TOAST_ERROR_STYLE);
+      } else {
+        const message = err instanceof Error ? err.message : "Encryption failed.";
+        toast.error(message, TOAST_ERROR_STYLE);
+      }
     } finally {
       setLoading(false);
     }
