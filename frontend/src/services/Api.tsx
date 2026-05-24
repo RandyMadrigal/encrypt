@@ -1,27 +1,20 @@
 import { IENCRYPT } from "../interface/user";
 
-export const encryptPassword = async (data: IENCRYPT) => {
-  try {
-    const response = await fetch(
-      import.meta.env.VITE_API_ENCRYPT_URL || "API_ENCRYPT_URL",
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "Application/json",
-        },
-        body: JSON.stringify(data),
-      },
-    );
+export const encryptPassword = async (data: IENCRYPT): Promise<string> => {
+  const response = await fetch(import.meta.env.VITE_API_ENCRYPT_URL, {
+    method: "POST",
+    credentials: "include",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
 
-    if (!response.ok) {
-      const err = await response.json();
-      throw new Error(`error, Status:${response.status}, Msg: ${err.msg} `);
-    }
-    const info = await response.json();
-
-    return info.text;
-  } catch (err) {
-    console.log(err);
+  if (!response.ok) {
+    const err = await response.json();
+    throw new Error(err.message || err.msg || `Error ${response.status}`);
   }
+
+  const info = await response.json();
+  return info.text;
 };

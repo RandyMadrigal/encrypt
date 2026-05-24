@@ -22,7 +22,7 @@ export const Encrypt = ({ encrypt }: propEncrypt) => {
           exit={{ opacity: 0, y: -10 }}
           transition={{ duration: 0.25 }}
           value={encrypt}
-          disabled
+          readOnly
           className="
             w-full
             min-h-[80px]

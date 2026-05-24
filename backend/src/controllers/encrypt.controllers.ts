@@ -6,9 +6,9 @@ export const getEncryptPassword = async (req: Request, res: Response) => {
 
   try {
     const hashPassword = await encryptService.encryptPassword(text);
-    res.status(201).json({ msg: "encrypted successfully", text: hashPassword });
-    return;
+    res.status(200).json({ msg: "encrypted successfully", text: hashPassword });
   } catch (err) {
-    console.log(err);
+    console.error(err);
+    res.status(500).json({ msg: "Internal server error" });
   }
 };

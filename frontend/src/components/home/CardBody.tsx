@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import toast from "react-hot-toast";
 import { IENCRYPT } from "../../interface/user";
 import { encryptPassword } from "../../services/Api";
 import { InfoPanel } from "./InfoPanel";
@@ -9,22 +10,23 @@ export const CardBody = () => {
   const [encrypt, setEncrypt] = useState("-");
   const [formData, setFormData] = useState<IENCRYPT>({ text: "" });
   const [showDev, setShowDev] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoading(true);
     try {
-      const request = await encryptPassword(formData);
-      if (request) setEncrypt(request);
+      const result = await encryptPassword(formData);
+      setEncrypt(result);
     } catch (err) {
-      console.log(err);
+      toast.error("Failed to encrypt. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -56,6 +58,7 @@ export const CardBody = () => {
 
         <button
           type="submit"
+          disabled={loading}
           className="
             w-full
             py-3
@@ -66,9 +69,11 @@ export const CardBody = () => {
             active:scale-95
             transition-all duration-200
             shadow-lg shadow-blue-500/30
+            disabled:opacity-60
+            disabled:cursor-not-allowed
           "
         >
-          Encrypt
+          {loading ? "Encrypting..." : "Encrypt"}
         </button>
       </form>
 
